@@ -1,8 +1,0 @@
-/home/zadmin/Desktop/workspace/greenko-level-2/microservices-apps/asset-service/src/main/java/com/greenko/assetservice/exception/AssetNotFoundException.java
-/home/zadmin/Desktop/workspace/greenko-level-2/microservices-apps/asset-service/src/main/java/com/greenko/assetservice/model/Asset.java
-/home/zadmin/Desktop/workspace/greenko-level-2/microservices-apps/asset-service/src/main/java/com/greenko/assetservice/repository/AssetRepository.java
-/home/zadmin/Desktop/workspace/greenko-level-2/microservices-apps/asset-service/src/main/java/com/greenko/assetservice/web/WebController.java
-/home/zadmin/Desktop/workspace/greenko-level-2/microservices-apps/asset-service/src/main/java/com/greenko/assetservice/web/AssetWebController.java
-/home/zadmin/Desktop/workspace/greenko-level-2/microservices-apps/asset-service/src/main/java/com/greenko/assetservice/exception/AssetErrorController.java
-/home/zadmin/Desktop/workspace/greenko-level-2/microservices-apps/asset-service/src/main/java/com/greenko/assetservice/api/AssetController.java
-/home/zadmin/Desktop/workspace/greenko-level-2/microservices-apps/asset-service/src/main/java/com/greenko/assetservice/AssetServiceApplication.java
