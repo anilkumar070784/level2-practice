@@ -1,0 +1,8 @@
+com/greenko/assetservice/web/AssetWebController.class
+com/greenko/assetservice/web/WebController.class
+com/greenko/assetservice/AssetServiceApplication.class
+com/greenko/assetservice/exception/AssetNotFoundException.class
+com/greenko/assetservice/api/AssetController.class
+com/greenko/assetservice/exception/AssetErrorController.class
+com/greenko/assetservice/model/Asset.class
+com/greenko/assetservice/repository/AssetRepository.class

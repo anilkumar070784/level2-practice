@@ -1,0 +1,100 @@
+services:
+
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: greenko_db
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  config-server:
+    build: ./config-server
+    container_name: config-server
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./config-repo:/config-repo
+    depends_on:
+      - mysql
+
+  asset-service:
+    build: ./microservices-apps/asset-service
+    container_name: asset-service
+    ports:
+      - "8000:8080"
+    depends_on:
+      - config-server
+      - mysql
+
+  telemetry-service:
+    build: ./microservices-apps/telemetry-service
+    container_name: telemetry-service
+    ports:
+      - "8082:8080"
+    depends_on:
+      - config-server
+      - mysql
+
+  alert-service:
+    build: ./microservices-apps/alert-service
+    container_name: alert-service
+    ports:
+      - "8083:8080"
+    depends_on:
+      - config-server
+      - mysql
+
+  gateway-service:
+    build: ./microservices-apps/gateway-service
+    container_name: gateway-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - config-server
+      - asset-service
+      - telemetry-service
+      - alert-service
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9091:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - gateway-service
+      - asset-service
+      - telemetry-service
+      - alert-service
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - "8088:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    privileged: true
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    volumes:
+      - grafana_data:/var/lib/grafana
+
+volumes:
+  mysql_data:
+  grafana_data:

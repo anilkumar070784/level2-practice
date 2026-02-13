@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      routes:
+
+        - id: asset-service
+          uri: http://asset-service:8080
+          predicates:
+            - Path=/api/assets/**
+
+        - id: telemetry-service
+          uri: http://telemetry-service:8080
+          predicates:
+            - Path=/api/telemetry/**
+
+        - id: alert-service
+          uri: http://alert-service:8080
+          predicates:
+            - Path=/api/alerts/**
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    prometheus:
+      enabled: true

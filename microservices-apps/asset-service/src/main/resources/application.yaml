@@ -1,11 +1,14 @@
 spring:
   application:
-    name: asset-service
+    name: asset-service   # change per service
+  config:
+    import: optional:configserver:http://config-server:8888
 
-
-  profiles:
-    active: dev
-
-
-server:
-  port: 8000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    prometheus:
+      enabled: true

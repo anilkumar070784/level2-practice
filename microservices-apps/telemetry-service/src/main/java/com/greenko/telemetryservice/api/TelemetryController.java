@@ -1,4 +1,4 @@
-package com.greenko.telemetryservice.api;
+    package com.greenko.telemetryservice.api;
 
 import com.greenko.telemetryservice.dto.AssetResponseDto;
 import com.greenko.telemetryservice.dto.TelemetryRequestDto;

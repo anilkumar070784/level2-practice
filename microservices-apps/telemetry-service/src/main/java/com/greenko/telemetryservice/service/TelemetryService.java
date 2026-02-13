@@ -1,35 +1,29 @@
 package com.greenko.telemetryservice.service;
 
+import com.greenko.telemetryservice.client.AlertClient;
+import com.greenko.telemetryservice.client.AssetClient;
+import com.greenko.telemetryservice.dto.AlertEvaluationResponseDto;
 import com.greenko.telemetryservice.dto.AssetResponseDto;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
+import com.greenko.telemetryservice.dto.TelemetryRequestDto;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 @Service
-@Slf4j
 public class TelemetryService {
 
-    private RestTemplate restTemplate;
+    private final AssetClient assetClient;
+    private final AlertClient alertClient;
 
-    @Value("${ASSET_SERVICE_URL:http://localhost:8081}")
-    private String assetServiceURL;
-
-    public TelemetryService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public TelemetryService(AssetClient assetClient, AlertClient alertClient) {
+        this.assetClient = assetClient;
+        this.alertClient = alertClient;
     }
-
 
     public AssetResponseDto fetchAssetDetails(String assetId) {
-        String url = assetServiceURL+"/api/assets/"+assetId;
-        log.info(url);
-        var assetDetails = restTemplate.getForObject(url, AssetResponseDto.class);
-        return assetDetails;
+        return assetClient.getAssetById(assetId);
     }
 
-
-
-
-
-
+    public AlertEvaluationResponseDto evaluateAlert(String assetId, double power, double temperature) {
+        TelemetryRequestDto request = new TelemetryRequestDto(assetId, power, temperature);
+        return alertClient.evaluate(request);
+    }
 }
